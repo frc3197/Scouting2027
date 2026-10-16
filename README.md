@@ -4,10 +4,10 @@ The app is built and deployed to GitHub Pages when a commit is pushed to `main`.
 In the repository's **Settings > Pages**, set the build and deployment source to
 **GitHub Actions**.
 
-Add these repository Actions variables under **Settings > Secrets and variables > Actions**:
+Add these repository Actions secrets under **Settings > Secrets and variables > Actions**:
 
 - `VITE_SUPABASE_URL`
-- `VITE_SUPABASE_KEY`
+- `VITE_SUPABASE_KEY` (the public anon/publishable key)
 
 `npm run build` creates the deployable site in `dist`. `npm run typecheck` runs
 the TypeScript check separately.
