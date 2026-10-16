@@ -1,4 +1,20 @@
-# React + TypeScript + Vite
+# Scouting2027
+
+The app is built and deployed to GitHub Pages when a commit is pushed to `main`.
+In the repository's **Settings > Pages**, set the build and deployment source to
+**GitHub Actions**.
+
+Add these repository Actions variables under **Settings > Secrets and variables > Actions**:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_KEY`
+- `VITE_FIREBASE_API_KEY`
+- `VITE_FIREBASE_AUTH_DOMAIN`
+- `VITE_FIREBASE_PROJECT_ID`
+- `VITE_FIREBASE_APP_ID`
+
+`npm run build` creates the deployable site in `dist`. `npm run typecheck` runs
+the TypeScript check separately.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

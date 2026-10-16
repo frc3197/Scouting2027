@@ -1,10 +1,10 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { TBA_KEY, useRawDataStore } from "../data-store";
 import { supabase } from "../../supabase";
 import type { Database } from "../../database.types";
 import { useEffect, useState } from "react";
 import { getGenerativeModel } from "firebase/ai";
-import { ai, db } from "../../firebase";
+import { ai } from "../firebase-client";
 
 const UpdateFetched = () => {
 
