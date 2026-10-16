@@ -19,6 +19,7 @@ const router = createHashRouter([
     path: "/",
     element: <Root></Root>,
     loader: rootLoader,
+    HydrateFallback: () => <div role="status" className="p-6">Loading scouting data...</div>,
     children: [
       {
         path: "/",
