@@ -14,7 +14,6 @@
     "@hello-pangea/dnd": "^18.0.1",
     "@supabase/supabase-js": "^2.90.1",
     "@tailwindcss/vite": "^4.1.18",
-    "firebase": "^12.10.0",
     "lucide-react": "^0.574.0",
     "process": "^0.11.10",
     "react": "^19.2.0",

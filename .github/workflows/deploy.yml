@@ -30,15 +30,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Validate app configuration
+        env:
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_KEY: ${{ vars.VITE_SUPABASE_KEY }}
+        run: |
+          for variable in VITE_SUPABASE_URL VITE_SUPABASE_KEY; do
+            if [ -z "${!variable}" ]; then
+              echo "::error::Required Actions variable $variable is not set"
+              exit 1
+            fi
+          done
+
       - name: Build site
         run: npm run build
         env:
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
           VITE_SUPABASE_KEY: ${{ vars.VITE_SUPABASE_KEY }}
-          VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
-          VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
-          VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
-          VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

@@ -8,10 +8,6 @@ Add these repository Actions variables under **Settings > Secrets and variables 
 
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_KEY`
-- `VITE_FIREBASE_API_KEY`
-- `VITE_FIREBASE_AUTH_DOMAIN`
-- `VITE_FIREBASE_PROJECT_ID`
-- `VITE_FIREBASE_APP_ID`
 
 `npm run build` creates the deployable site in `dist`. `npm run typecheck` runs
 the TypeScript check separately.

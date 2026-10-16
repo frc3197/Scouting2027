@@ -2,39 +2,12 @@ import { Link } from "react-router-dom";
 import { TBA_KEY, useRawDataStore } from "../data-store";
 import { supabase } from "../../supabase";
 import type { Database } from "../../database.types";
-import { useEffect, useState } from "react";
-import { getGenerativeModel } from "firebase/ai";
-import { ai } from "../firebase-client";
 
 const UpdateFetched = () => {
 
     const rawData = useRawDataStore();
 
-    const generationConfig = {
-        temperature: 0.6,
-        topP: 0.1,
-        topK: 16,
-    };
-
-    const [localValue, setLocalValue] = useState(rawData.eventKey);
-    useEffect(() => {
-        setLocalValue(rawData.eventKey);
-        console.warn(rawData.eventKey)
-    }, [rawData.eventKey]);
-
-    const model = getGenerativeModel(ai, { model: "gemini-3-flash-preview", generationConfig, systemInstruction: "You are a scouting assistant on team 3197, the hexhounds, competing in FRC robotics. give helpful tips that will help our team win, use insights from our data to answer questions" });
-
     const updateData = async () => {
-        //if (prompt('Password?') != 'chomp')
-        //return;
-
-        //alert('Udating data...');
-
-        const aiRaw = await generateAIOverviewsTeamsJSON();
-        console.log(aiRaw.replaceAll('json', '').replaceAll('`', ''));
-        const aiParsed = JSON.parse(aiRaw.replaceAll('json', '').replaceAll('`', ''));
-        console.log(aiParsed);
-
         const teams = Object.keys(rawData.rawDataCombined.team_rows);
 
         var newData: Database['public']['Tables']['Fetched Team Data']['Insert'][] = [];
@@ -72,7 +45,6 @@ const UpdateFetched = () => {
                 'secondary_hex': colorData?.secondaryHex ?? '#000000',
                 'team_name': tbaData?.teamData?.[parseInt(team)] ?? 'Unknown',
                 'epa': statboticsData?.epa?.breakdown?.['total_points'] ?? -1,
-                'ai_overview': aiParsed[team] ?? null,
                 'auto_fuel': statboticsData?.epa?.breakdown?.['auto_fuel'] ?? -1,
             });
         }
@@ -133,41 +105,6 @@ const UpdateFetched = () => {
             console.error("TBA fetch error", err);
             return null;
         }
-    }
-
-    async function generateAIOverviewsTeamsJSON() {
-
-        const context = [
-            `Provide a team overview for each team. Respond in two sentences, give a quick overview of the team with any things. Ensure the data has a reliable source. that stand otu from the rest. in the following format as a VALID JSON, 9999 being their team number:
-            {
-            [
-            9999: {
-                This is the section to write about the team.
-            }
-            ]
-        }
-            `,
-            'Your response should only be valid JSON and nothing else, make sure it can be parsed directly.',
-            'Only include the teams in the arrays below...',
-            JSON.stringify(rawData.rawDataCombined.all_match_data),
-            JSON.stringify(rawData.rawDataCombined.team_rows),
-        ];
-
-        // To generate text output, call generateContent with the text input
-        var result;
-        try {
-            result = await model.generateContent(context);
-
-            alert('Successfully generated overviews... uploading now.');
-        } catch (error) {
-            alert('Error: ' + error);
-
-        }
-
-        const response = result?.response ?? null;
-        const text = response?.text();
-
-        return text ?? '{}';
     }
 
     return <div className="w-full pt-5 flex flex-1 flex-col justify-center items-center pb-10 gap-5">
