@@ -12,7 +12,9 @@ const UpdateFetched = () => {
 
         var newData: Database['public']['Tables']['Fetched Team Data']['Insert'][] = [];
 
+        // TODO CHANGE THIS
         const tbaData = await fetchTbaEventData(rawData.eventKey);
+        console.log("TBA Data:", tbaData);
 
         for (const team of teams) {
             let colorData = null;
@@ -29,6 +31,9 @@ const UpdateFetched = () => {
             }
 
             // 2. Independent Statbotics Fetch
+
+            // DISABLE FOR NOW- STATBOTICS BROKEN
+            /*
             try {
                 const statboticsResponse = await fetch(`https://api.statbotics.io/v3/team_year/${team}/2026`);
                 if (statboticsResponse.ok) {
@@ -37,6 +42,7 @@ const UpdateFetched = () => {
             } catch (err) {
                 console.error(`Statbotics fetch failed for ${team}:`, err);
             }
+                */
 
             // 3. Combine results with safe fallbacks
             newData.push({
@@ -110,11 +116,11 @@ const UpdateFetched = () => {
     return <div className="w-full pt-5 flex flex-1 flex-col justify-center items-center pb-10 gap-5">
         <h2 className='text-center text-3xl font-rubik font-light w-full mb-5'>Update Fetched Data</h2>
         <select onChange={(e) => rawData.setEventKey(e.target.value)} id="event-key-select" className="bg-[#ebe8d8]/67 px-3 min-w-25 py-1 rounded-md border-1 border-gray-500 hover:border-gray-800 transition cursor-pointer active:ring-2">
-            {rawData.districtEventKeys.map((key, i) => {
+            {/*{rawData.districtEventKeys.map((key, i) => {
                 console.log("Current Event Key:", rawData.eventKey);
                 return <option key={i} value={key}>{key}</option>
-            }
             )}
+            }*/}<option key={0} value={'2026iltrr'}>2026iltrr</option>
         </select>
         <button onClick={updateData} className="bg-[#ebe8d8]/67 text-xl px-5 py-2 w-fit shadow-sm rounded-lg border-1 border-gray-600 flex flex-row items-center justify-center gap-3 cursor-pointer hover:ring-2 hover:shadow-md hover:scale-101 transition">
             Update Data
