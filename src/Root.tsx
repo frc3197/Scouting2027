@@ -44,7 +44,7 @@ export async function loader(): Promise<LIVE_DATA_COMBINED> {
         supabase.from('Pick List').select('*'),
         supabase.from('Fetched Team Data').select('*'),
         //fetchEventData(localStorage.getItem('event-key') ?? '2026iltrr')
-        fetchEventData('2026iltrr');
+        fetchEventData('2026iltrr')
     ]);
 
     console.log(fetched_team_data)
